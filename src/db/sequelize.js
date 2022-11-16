@@ -11,6 +11,6 @@ const sequelize = new Sequelize(
   }
 );
 
-require("../models/core/Author.model")(sequelize);
+const Author = require("../models/core/Author.model")(sequelize);
 
-module.exports = sequelize;
+module.exports = { sequelize, Author };
