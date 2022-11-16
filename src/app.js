@@ -1,19 +1,19 @@
 const express = require("express");
 const { config } = require("./config");
-const { sequelize } = require("./db/database");
+const sequelize = require("./db/sequelize");
 const { routes } = require("./routes");
 
 const PORT = config.server_port;
+
 try {
-  sequelize.authenticate();
+  sequelize.sync();
   console.log("Connection has been established successfully.");
 } catch (error) {
   console.error("Unable to connect to the database:", error);
 }
-
 const app = express();
 app.use(express.json());
-app.use('/api', routes)
+app.use("/api", routes);
 
 app.get("/", (req, res) => {
   res.json({ state: "OK" });
