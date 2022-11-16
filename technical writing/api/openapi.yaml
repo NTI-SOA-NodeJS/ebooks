@@ -1,0 +1,1448 @@
+openapi: 3.0.0
+info:
+  title: e-books
+  version: 1.0.0
+servers:
+- url: "http://{{url}}"
+security:
+- bearerAuth: []
+tags:
+- name: books
+  description: Book CRUD operations
+- name: genres
+  description: Genre CRUD operations.
+- name: authors
+- name: user
+paths:
+  /books/{id}:
+    get:
+      tags:
+      - books
+      summary: Get Book by :id
+      description: Get book data by its `:id`
+      operationId: booksIdGET
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                id: 1
+                title: book 1
+                isbn: "ISBN 10: 0768374464"
+                url: localhost:3000/assets/book.pdf
+                authors:
+                - id: 2
+                  name: Ahmed
+                publishDate: 2012-04-23T18:25:43.511Z
+                genres:
+                - id: 1
+                  name: software
+                - id: 2
+                  name: cloud
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: Book not found
+      x-swagger-router-controller: Books
+    put:
+      tags:
+      - books
+      summary: Update Book by :id
+      description: Update book data by its `:id`
+      operationId: booksIdPUT
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: book 1
+                isbn: "ISBN 10: 0768374464"
+                url: localhost:3000/assets/book.pdf
+                authersIds:
+                - 4
+                - 5
+                publishDate: 2012-04-23T18:25:43.511Z
+                genresIds:
+                - 2
+                - 3
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: Book updated successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: Book not updated
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Books
+    delete:
+      tags:
+      - books
+      summary: Delete Book by :id
+      description: Delete book data by its `:id`
+      operationId: booksIdDELETE
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: Book deleted successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: Book not deleted
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Books
+  /books/:
+    post:
+      tags:
+      - books
+      summary: Add new book
+      description: Add new book to database.
+      operationId: booksPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: book 1
+                isbn: "ISBN 10: 0768374464"
+                url: localhost:3000/assets/book.pdf
+                authersIds:
+                - 4
+                - 5
+                publishDate: 2012-04-23T18:25:43.511Z
+                genresIds:
+                - 2
+                - 3
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: The Book added successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: The Book not added
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Books
+  /books:
+    get:
+      tags:
+      - books
+      summary: Get books list
+      description: |-
+        Get list of books.
+
+        The `searchValue` will be search in `title` , `isbn` , `genre` and `author` that contain this value if it `null` it will be ignored.
+
+        You can filter books using If `authorsIds` or `genresIds` or both if any is `null` it will be ignored.
+
+        the default values to the query prams is `page` = 1 and the `len` = 10 **note:** that `page` starts with 1.
+      operationId: booksGET
+      parameters:
+      - name: page
+        in: query
+        description: the page number
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "1"
+      - name: len
+        in: query
+        description: number of books per page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "10"
+      - name: searchValue
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: book1
+      - name: authorsIds
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "[1,2,3]"
+      - name: genresIds
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "[1,2]"
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                page: 1
+                len: 10
+                books:
+                - id: 1
+                  title: book 1
+                  isbn: "ISBN 10: 0768374464"
+                  url: localhost:3000/assets/book.pdf
+                  authors:
+                  - id: 2
+                    name: Ahmed
+                  publishDate: 2012-04-23T18:25:43.511Z
+                  genres:
+                  - id: 1
+                    name: software
+                  - id: 2
+                    name: cloud
+                - id: 5
+                  title: book 3
+                  isbn: "ISBN 10: 0768374564"
+                  url: localhost:3000/assets/book3.pdf
+                  authors:
+                  - id: 1
+                    name: Robert
+                  publishDate: 2013-04-23T18:25:43.511Z
+                  genres:
+                  - id: 3
+                    name: comics
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: Resource does not exist
+      x-swagger-router-controller: Books
+    delete:
+      tags:
+      - books
+      summary: Delete list of books
+      description: "Note: Only **Super Admin** and **Admins** can delete list of books."
+      operationId: booksDELETE
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: books deleted successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: Resource does not exist
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Books
+  /genres/{id}:
+    get:
+      tags:
+      - genres
+      summary: Get genre by :id
+      operationId: genresIdGET
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                id: 1
+                name: software
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: genre not found
+      x-swagger-router-controller: Genres
+    put:
+      tags:
+      - genres
+      summary: Update genre by :id
+      operationId: genresIdPUT
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: software
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: genre updated successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+            ? ""
+            : style: simple
+              explode: false
+              schema:
+                type: string
+                example: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: genre not found
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Genres
+    delete:
+      tags:
+      - genres
+      summary: Delete genre by :id
+      operationId: genresIdDELETE
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: genre deleted successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: genre not deleted
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Genres
+  /genres/:
+    post:
+      tags:
+      - genres
+      summary: Add new genre
+      operationId: genresPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: software
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: genre added successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: genre not added
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Genres
+  /genres:
+    get:
+      tags:
+      - genres
+      summary: Get genres
+      operationId: genresGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "1"
+      - name: len
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "10"
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                page: 1
+                len: 10
+                genres:
+                - id: 1
+                  name: software
+                - id: 2
+                  name: cloud
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: Something error happend
+      x-swagger-router-controller: Genres
+  /authors/{id}:
+    get:
+      tags:
+      - authors
+      summary: Get author by :id
+      operationId: authorsIdGET
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                id: 1
+                name: Ahmed
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: auther not found
+      security:
+      - noauthAuth: []
+      x-swagger-router-controller: Authors
+    put:
+      tags:
+      - authors
+      summary: Update author by :id
+      operationId: authorsIdPUT
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: software
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: auther updated successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+            ? ""
+            : style: simple
+              explode: false
+              schema:
+                type: string
+                example: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: auther not found
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Authors
+    delete:
+      tags:
+      - authors
+      summary: Delete author by id
+      operationId: authorsIdDELETE
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: auther deleted successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: auther not deleted
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Authors
+  /authors/:
+    post:
+      tags:
+      - authors
+      summary: Add new author
+      operationId: authorsPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Ahmed
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: auther added successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: auther not added
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Authors
+  /authers:
+    get:
+      tags:
+      - authors
+      summary: Get authors
+      operationId: authersGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "1"
+      - name: len
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "10"
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                page: 1
+                len: 10
+                authers:
+                - id: 1
+                  name: software
+                - id: 2
+                  name: cloud
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: Something error happend
+      x-swagger-router-controller: Authors
+  /users:
+    get:
+      tags:
+      - user
+      summary: Get all users
+      operationId: usersGET
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+              - id: 1
+                name: Ahmed Mohamed
+                phone: +201155578548
+                emails:
+                - eamil1@gmail.com
+                birthDate: 2012-04-23T18:25:43.511Z
+                role: customer
+              - id: 2
+                name: Ahmed Mohamed
+                phone: +201155578548
+                emails:
+                - eamil1@gmail.com
+                birthDate: 2012-04-23T18:25:43.511Z
+                role: customer
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: can not get user data
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: User
+    put:
+      tags:
+      - user
+      summary: Update user data
+      operationId: usersPUT
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "5"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Ahmed Mohamed
+                phone: +201155578548
+                emails: eamil1@gmail.com
+                birthDate: 2012-04-23T18:25:43.511Z
+                password: qwerqwerqer
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: user updated successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: user not updated
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: User
+    post:
+      tags:
+      - user
+      summary: create user
+      description: user **Registration**
+      operationId: usersPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Ahmed Mohamed
+                phone: +201155578548
+                email: eamil1@gmail.com
+                birthDate: 2012-04-23T18:25:43.511Z
+                password: qwerqwerqer
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: user added successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: user not added
+      security:
+      - noauthAuth: []
+      x-swagger-router-controller: User
+    delete:
+      tags:
+      - user
+      summary: Delete user by id
+      description: only `superAdmin` can delete user.
+      operationId: usersDELETE
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "5"
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: user deleted successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: can not delete the user
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: User
+  /users/role:
+    put:
+      tags:
+      - user
+      summary: Change user role
+      description: |-
+        Change the user Role, We have 3 roles `superAdmin` `admin` `customer`
+
+        Note: Only the `superAdmin` can change the role of other users
+      operationId: usersRolePUT
+      parameters:
+      - name: userId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: "1"
+      - name: role
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ""
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: user role changed successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: can not change the user role
+      security:
+      - basicAuth: []
+      x-swagger-router-controller: User
+  /user/:
+    post:
+      tags:
+      - user
+      summary: Add email to user
+      description: Add the user Email.
+      operationId: userPOST
+      parameters:
+      - name: email
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: email3@gmail.com
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ""
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: email added successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: can not add this email to the user
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: User
+  /users/login:
+    post:
+      tags:
+      - user
+      summary: login
+      operationId: usersLoginPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: email@gmail.com
+                password: "5484656468"
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: user can not login
+      security:
+      - noauthAuth: []
+      x-swagger-router-controller: User
+  /users/logout:
+    get:
+      tags:
+      - user
+      summary: logout
+      operationId: usersLogoutGET
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 200
+                message: user loged out successfully
+        "400":
+          description: Bad Request
+          headers:
+            Content-Type:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              example:
+                status: 400
+                message: something error occure
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: User
+components:
+  schemas: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    noauthAuth:
+      type: http
+      scheme: noauth
+    basicAuth:
+      type: http
+      scheme: basic
