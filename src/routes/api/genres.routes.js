@@ -15,6 +15,6 @@ router.delete("/:id", controller.deleteGenreById);
 router.post("/", controller.addNewGenre);
 
 //TODO: create the method in controller
-router.get("/", controller.GetAllGenres);
+router.get("/", controller.getAllGenres);
 
 module.exports = router;

@@ -10,7 +10,7 @@ exports.deleteGenreById = (req, res) => {
 exports.addNewGenre = (req, res) => {
   //TODO: write code here.
 };
-exports.GetAllGenres = (req, res) => {
+exports.getAllGenres = (req, res) => {
   //TODO: write code here.
 };
 

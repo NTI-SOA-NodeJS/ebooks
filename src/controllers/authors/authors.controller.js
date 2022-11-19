@@ -11,6 +11,6 @@ exports.deleteAuthorById = (req, res) => {
 exports.addNewAuthor = (req, res) => {
   //TODO: write code here.
 };
-exports.GetAllAuthors = (req, res) => {
+exports.getAllAuthors = (req, res) => {
   //TODO: write code here.
 };

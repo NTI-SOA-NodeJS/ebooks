@@ -1,6 +1,6 @@
 const express = require("express");
 const  controller  = require("../../controllers/authors/authors.controller");
-
+ 
 const router = express.Router();
 
 //TODO: create the method in controller
@@ -16,6 +16,6 @@ router.delete("/:id", controller.deleteAuthorById);
 router.post("/", controller.addNewAuthor);
 
 //TODO: create the method in controller
-router.get("/", controller.GetAllAuthors);
+router.get("/", controller.getAllAuthors);
 
 module.exports = router;
