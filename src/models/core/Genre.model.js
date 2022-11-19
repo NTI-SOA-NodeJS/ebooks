@@ -1,17 +1,18 @@
 const { DataTypes } = require("sequelize");
-const Author = (sequelize) => {
-  sequelize.define("Author", {
+
+const Genre = (sequelize) =>
+  sequelize.define("Genre", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // author_books_id: {
+    // book_genres_id: {
     //   type: DataTypes.INTEGER,
     //   references: {
-    //     model: "author_books",
+    //     model: "book_genres",
     //     key: "id",
     //   },
     // },
   });
-};
-module.exports = Author;
+
+module.exports = Genre;

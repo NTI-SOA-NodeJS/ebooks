@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-const Book = (sequelize) =>
+const Book = (sequelize) => {
   sequelize.define("Author", {
     name: {
       type: DataTypes.STRING,
@@ -18,10 +18,25 @@ const Book = (sequelize) =>
       type: DataTypes.STRING,
       allowNull: false,
     },
-    isDeleted:{
+    isDeleted: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
-    }
+      defaultValue: false,
+    },
+    // author_books_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: "author_books",
+    //     key: "id",
+    //   },
+    // },
+    // book_genres_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: "book_genres",
+    //     key: "id",
+    //   },
+    // },
   });
+};
 
 module.exports = Book;
