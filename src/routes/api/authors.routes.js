@@ -1,23 +1,20 @@
 const express = require("express");
-const { getAllBooks } = require("../../controllers/books/books.controller");
 
 const router = express.Router();
 
 //TODO: create the method in controller
-router.get("/:id", getBookById);
+router.get("/:id", getAuthorById);
 
 //TODO: create the method in controller
-router.put("/:id", updateBookById);
+router.put("/:id", updateAuthorById);
 
 //TODO: create the method in controller
-router.delete("/:id", deleteBookById);
+router.delete("/:id", deleteAuthorById);
 
 //TODO: create the method in controller
-router.post("/", addNewBook);
-
-router.get("/", getAllBooks);
+router.post("/", addNewAuthor);
 
 //TODO: create the method in controller
-router.delete("/", deleteListOfBooks);
+router.get("/", GetAllAuthors);
 
 module.exports = router;
