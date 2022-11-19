@@ -22,7 +22,7 @@ const Author = (sequelize, DataTypes) => {
 };
 
 const Book = (sequelize, DataTypes) => {
-  sequelize.define("Author", {
+  sequelize.define("Book", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -47,7 +47,7 @@ const Book = (sequelize, DataTypes) => {
 };
 Author(sequelize, Sequelize.DataTypes);
 Book(sequelize, Sequelize.DataTypes);
-console.log(`truth is : ${Book.hasMany}`);
+console.log(`truth is : ${sequelize }`);
 // Book.belongsToMany(Author, { through: "Author_Books" });
 // Author.belongsToMany(Book, {
 //   through: "Author_Books",

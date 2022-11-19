@@ -1,10 +1,6 @@
-const { DataTypes } = require("sequelize");
-const Author = require("./Author.model");
-const sequelize = require("../../database/sequelize");
-
 const Book = (sequelize, DataTypes) => {
   sequelize.define("Author", {
-    name: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -12,8 +8,8 @@ const Book = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    data: {
-      type: DataTypes.STRING,
+    date: {
+      type: DataTypes.Date,
       allowNull: false,
     },
     url: {
@@ -24,7 +20,6 @@ const Book = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    
   });
 };
 
