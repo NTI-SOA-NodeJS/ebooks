@@ -1,20 +1,20 @@
 const express = require("express");
-
+const controller = require("../../controllers/genres/genres.controller");
 const router = express.Router();
 
 //TODO: create the method in controller
-router.get("/:id", getGenreById);
+router.get("/:id", controller.getGenreById);
 
 //TODO: create the method in controller
-router.put("/:id", updateGenreById);
+router.put("/:id", controller.updateGenreById);
 
 //TODO: create the method in controller
-router.delete("/:id", deleteGenreById);
+router.delete("/:id", controller.deleteGenreById);
 
 //TODO: create the method in controller
-router.post("/", addNewGenre);
+router.post("/", controller.addNewGenre);
 
 //TODO: create the method in controller
-router.get("/", GetAllGenres);
+router.get("/", controller.GetAllGenres);
 
 module.exports = router;
