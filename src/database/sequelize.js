@@ -1,6 +1,6 @@
 const { config } = require("../config");
 const Sequelize = require("sequelize");
-const { applyExtraSetup } = require("./extra-setup");
+// const { Author, Book } = require("../models/index");
 
 const sequelize = new Sequelize(
   config.database,
@@ -12,26 +12,47 @@ const sequelize = new Sequelize(
   }
 );
 
-const Author = require("../models/core/Author.model")(sequelize);
-const Genre = require("../models/core/Genre.model")(sequelize);
-const Book = require("../models/core/Book.model")(sequelize);
-// const Author_book = require("../models/core/Author_Book")(sequelize);
-// const Book_Genre = require("../models/core/Book_Genre")(sequelize);
-const Order_Item = require("../models/core/Order_Item.model")(sequelize);
-const Order = require("../models/core/Order.model")(sequelize);
+const Author = (sequelize, DataTypes) => {
+  sequelize.define("Author", {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
+};
 
-const Role = require("../models/auth/Role.model")(sequelize);
-const User = require("../models/auth/User.model")(sequelize);
-const Email = require("../models/auth/Email.model")(sequelize);
+const Book = (sequelize, DataTypes) => {
+  sequelize.define("Author", {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isbn: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    data: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+  });
+};
+Author(sequelize, Sequelize.DataTypes);
+Book(sequelize, Sequelize.DataTypes);
+console.log(`truth is : ${Book.hasMany}`);
+// Book.belongsToMany(Author, { through: "Author_Books" });
+// Author.belongsToMany(Book, {
+//   through: "Author_Books",
+// });
 
 module.exports = {
   sequelize,
-  Author,
-  Genre,
-  Book,
-  Order,
-  Order_Item,
-  User,
-  Role,
-  Email,
 };
