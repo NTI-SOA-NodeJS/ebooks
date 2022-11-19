@@ -5,7 +5,10 @@ const authorsRoutes = require("./api/authors.routes");
 const usersRoutes = require("./api/users.routes");
 
 const routes = Router();
-
+routes.get("/", (req, res) => {
+    res.json({ state: "OK" });
+  });
+  
 routes.use("/books", booksRoutes);
 routes.use("/genres", genresRoutes);
 routes.use("/users", usersRoutes);
