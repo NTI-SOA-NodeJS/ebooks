@@ -1,34 +1,36 @@
 const express = require("express");
 const controller = require("../../controllers/users/index");
 const router = express.Router();
-
+//done
 router.post('/roles', controller.addNewRole)
+//done
 router.get('/roles', controller.getAllRoles)
-//TODO: create the method in controller
+//done
 router.get("/", controller.getAllUsers);
-
+//
+router.get('/emails', controller.getAllEmails)
 //TODO: create the method in controller
-// router.put("/update", controller.updateUserById);
+router.put("/update/:id", controller.updateUserById);
 
-//TODO: create the method in controller
+//done
 router.post("/register", controller.addNewUser);
 
-//TODO: create the method in controller
+//done
 router.delete("/delete/:id", controller.deleteUserById);
 
-//TODO: create the method in controller
-// router.get("/:id", controller.getUserById);
+//done
+router.get("/:id", controller.getUserById);
+
+//done
+router.put("/role", controller.updateUserRole);
+
+//done
+router.post("/emails/:userId", controller.addEmailToUser);
+
+//done
+router.post("/login", controller.loginUser);
 
 //TODO: create the method in controller
-// router.put("/role", controller.updateUserRole);
-
-//TODO: create the method in controller
-// router.post("/email", controller.addEmailToUser);
-
-//TODO: create the method in controller
-// router.post("/login", controller.loginUser);
-
-//TODO: create the method in controller
-// router.get("/logout", controller.logoutUser);
+router.get("/logout", controller.logoutUser);
 
 module.exports = router;
