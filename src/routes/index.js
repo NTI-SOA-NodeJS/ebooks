@@ -6,11 +6,12 @@ const usersRoutes = require("./api/users.routes");
 
 const routes = Router();
 routes.get("/", (req, res) => {
-    res.json({ state: "OK" });
-  });
-  
+  res.json({ state: "OK" });
+});
+
 routes.use("/books", booksRoutes);
 routes.use("/genres", genresRoutes);
+routes.use("/authors", authorsRoutes);
 routes.use("/users", usersRoutes);
 
-module.exports = {routes};
+module.exports = { routes };
