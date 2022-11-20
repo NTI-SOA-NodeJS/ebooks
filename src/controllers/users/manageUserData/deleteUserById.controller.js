@@ -1,6 +1,6 @@
-const { Role } = require("../../models/auth/Role.model")
+const { Role } = require("../../../models/auth/Role.model")
 
-exports.addNewRole =async (req, res) =>{
+exports.deleteUserById =async (req, res) =>{
     try {
         const role = req.body
         const newRole = Role.create(ro)
