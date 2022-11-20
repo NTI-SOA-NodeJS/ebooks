@@ -2,7 +2,7 @@ const express = require("express");
 const controller = require("../../controllers/users/index");
 const router = express.Router();
 
-// router.post('/role/create', controller.addNewRole)
+router.post('/role/create', controller.addNewRole)
 //TODO: create the method in controller
 router.get("/", controller.getAllUsers);
 
