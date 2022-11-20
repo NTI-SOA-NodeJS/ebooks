@@ -5,6 +5,7 @@ const { routes } = require("./routes");
 const sequelize = require("./database/sequelize");
 
 const PORT = config.server_port;
+const app = express();
 
 (async () => {
   try {
@@ -15,7 +16,6 @@ const PORT = config.server_port;
     console.error("Unable to connect to the database");
   }
 })();
-const app = express();
 
 app.use(express.json());
 app.use("/api", routes);

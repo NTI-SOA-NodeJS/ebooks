@@ -1,6 +1,5 @@
 const { config } = require("../config");
 const Sequelize = require("sequelize");
-// const { Author, Book } = require("../models/index");
 
 const sequelize = new Sequelize(
   config.database,
