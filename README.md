@@ -15,3 +15,6 @@ Notifications of delivered and received messages.
 Send copies to many.
 Has an address book to store information of different addresses.
 Has attachment option.
+
+
+###make user columns unique
