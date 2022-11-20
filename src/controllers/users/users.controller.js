@@ -4,9 +4,7 @@ exports.getAllUsers = (req, res) => {
 exports.updateUserById = (req, res) => {
   //TODO: write code here.
 };
-exports.addNewUser = (req, res) => {
-  //TODO: write code here.
-};
+
 exports.deleteUserById = (req, res) => {
   //TODO: write code here.
 };
