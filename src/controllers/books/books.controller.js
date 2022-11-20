@@ -121,28 +121,12 @@ exports.getBooksList = (req, res) => {
     const authorsIds = req.query.authorsIds;
     const genresIds = req.query.genresIds;
     var lst = await Book.findAll({
-      include: [
-        genresIds != null
-          ? {
-              model: Genre,
-              through: {
-                where: { GenreId: { [Op.in]: JSON.parse(genresIds) } },
-              },
-            }
-          : Genre,
-        authorsIds != null
-          ? {
-              model: Author,
-              through: {
-                where: { AuthorId: { [Op.in]: JSON.parse(authorsIds) } },
-              },
-            }
-          : Author,
-      ],
+      include: [Genre, Author],
       where:
         searchValue != null
           ? {
               title: { [Op.substring]: searchValue },
+              Genres:{}
             }
           : {},
 
