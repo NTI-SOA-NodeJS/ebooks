@@ -1,5 +1,6 @@
 const express = require("express");
-const  controller  = require("../../controllers/books/books.controller");
+const controller = require("../../controllers/books/books.controller");
+
 const router = express.Router();
 
 router.get("/:id", controller.getBookById);

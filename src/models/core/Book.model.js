@@ -1,10 +1,8 @@
 const { DataTypes } = require("sequelize");
-const Author = require("./Author.model");
 const sequelize = require("../../database/sequelize");
-
-const Book = (sequelize, DataTypes) => {
-  sequelize.define("Author", {
-    name: {
+const Book = 
+  sequelize.define("Book", {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -12,7 +10,7 @@ const Book = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    data: {
+    publishDate: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -24,8 +22,6 @@ const Book = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    
   });
-};
 
 module.exports = Book;

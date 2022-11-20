@@ -12,47 +12,47 @@ const sequelize = new Sequelize(
   }
 );
 
-const Author = (sequelize, DataTypes) => {
-  sequelize.define("Author", {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  });
-};
+// const Author = (sequelize, DataTypes) => {
+//   sequelize.define("Author", {
+//     name: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//   });
+// };
 
-const Book = (sequelize, DataTypes) => {
-  sequelize.define("Author", {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    isbn: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    data: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    isDeleted: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-  });
-};
-Author(sequelize, Sequelize.DataTypes);
-Book(sequelize, Sequelize.DataTypes);
-console.log(`truth is : ${Book.hasMany}`);
+// const Book = (sequelize, DataTypes) => {
+//   sequelize.define("Author", {
+//     name: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     isbn: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     data: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     url: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     isDeleted: {
+//       type: DataTypes.BOOLEAN,
+//       defaultValue: false,
+//     },
+//   });
+// };
+// Author(sequelize, Sequelize.DataTypes);
+// Book(sequelize, Sequelize.DataTypes);
+// console.log(`truth is : ${Book.hasMany}`);
 // Book.belongsToMany(Author, { through: "Author_Books" });
 // Author.belongsToMany(Book, {
 //   through: "Author_Books",
 // });
 
-module.exports = {
-  sequelize,
-};
+module.exports = 
+  sequelize;
+
