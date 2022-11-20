@@ -2,7 +2,8 @@ const express = require("express");
 const controller = require("../../controllers/users/index");
 const router = express.Router();
 
-// router.post('/role/create', controller.addNewRole)
+router.post('/roles', controller.addNewRole)
+router.get('/roles', controller.getAllRoles)
 //TODO: create the method in controller
 router.get("/", controller.getAllUsers);
 
@@ -13,7 +14,7 @@ router.get("/", controller.getAllUsers);
 router.post("/register", controller.addNewUser);
 
 //TODO: create the method in controller
-// router.delete("/delete", controller.deleteUserById);
+router.delete("/delete/:id", controller.deleteUserById);
 
 //TODO: create the method in controller
 // router.get("/:id", controller.getUserById);
