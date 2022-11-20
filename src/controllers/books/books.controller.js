@@ -39,11 +39,11 @@ exports.addNewBook = (req, res) => {
           BookId: book.id,
           GenreId: element,
         }).then(()=>{
-          Book.findOne({ where: { id: book.id }, include: Genre }).then(
-            (books) => {
-              res.json(books);
-            }
-          );
+Book.findOne({ where: { id: book.id }, include: Genre }).then(
+        (books) => {
+          res.json(books);
+        }
+      );
         })
         console.log(`element: ${element}`);
         // promises.push(
