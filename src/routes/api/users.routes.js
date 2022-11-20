@@ -24,7 +24,7 @@ router.get("/:id", controller.getUserById);
 //done
 router.put("/role", controller.updateUserRole);
 
-//TODO: create the method in controller
+//done
 router.post("/emails/:userId", controller.addEmailToUser);
 
 //TODO: create the method in controller

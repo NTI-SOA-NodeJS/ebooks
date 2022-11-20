@@ -1,3 +1,4 @@
+const { Email } = require("../../../models");
 const User = require("../../../models/auth/User.model");
 
 exports.addEmailToUser = async (req, res) => {
@@ -6,7 +7,8 @@ exports.addEmailToUser = async (req, res) => {
     const email = req.body;
     const user = await User.findByPk(userId);
     if (user) {
-      const newEmail = await user.addEmail(email);
+      const newEmail = await Email.create(email);
+      user.addEmail(newEmail)
       res.json({
         state: "ok",
         message: `email: ${newEmail} created and attached to user: ${user} succesfully`,
