@@ -27,10 +27,10 @@ router.put("/role", controller.updateUserRole);
 //done
 router.post("/emails/:userId", controller.addEmailToUser);
 
-//TODO: create the method in controller
-// router.post("/login", controller.loginUser);
+//done
+router.post("/login", controller.loginUser);
 
 //TODO: create the method in controller
-// router.get("/logout", controller.logoutUser);
+router.get("/logout", controller.logoutUser);
 
 module.exports = router;

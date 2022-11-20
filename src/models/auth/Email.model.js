@@ -6,6 +6,7 @@ const Email = sequelize.define("Email", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isPrimary: DataTypes.BOOLEAN,
 });
 
 module.exports = Email;
