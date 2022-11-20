@@ -1,9 +1,8 @@
 const { Genre } = require("../../models/index");
-
-exports.getGenreById =async (req, res) => {
+exports.getGenreById = async (req, res) => {
   var id = req.params.id;
-  var query = await Genre.findOne({ where: { id: id }});
-  res.json(query)
+  var query = await Genre.findOne({ where: { id: id } });
+  res.json(query);
 };
 exports.updateGenreById = (req, res) => {
   //TODO: write code here.
