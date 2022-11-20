@@ -5,7 +5,7 @@ exports.getAllRoles = async (req, res) => {
     const roles = await Role.findAll();
     res.json({
       state: "ok",
-      message: "rloes retrieved successfully",
+      message: "roles retrieved successfully",
       data: roles,
     });
   } catch (error) {
