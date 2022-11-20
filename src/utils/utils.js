@@ -22,6 +22,8 @@ statusMessages = (status) => {
   switch (status) {
     case 200:
       return "Ok";
+    case 400:
+      return "Bad request";
     case 404:
       return "Not found";
     case 500:
@@ -38,3 +40,12 @@ exports.listResponse = (results, page, len) => ({
   total: results.length,
   data: results,
 });
+
+exports.generalHandler = async (res, fun) => {
+  try {
+    await fun();
+  } catch (err) {
+    console.error(err);
+    this.ResponseTemp(res, 400, err);
+  }
+};

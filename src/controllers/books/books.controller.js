@@ -1,5 +1,9 @@
 const { Book, Author, Genre, BookGenre } = require("../../models/index");
-
+const { generalHandler, foundedOrNot } = require("../../utils/utils");
+// const AJV = require("ajv");
+const AJV = require("ajv").default;
+const addFormats = require("ajv-formats").default;
+const { postBookSchema } = require("../../schemas/post_book_schema");
 exports.getBooksList = (req, res) => {
   //TODO: write code here.
   res.json({
@@ -7,18 +11,14 @@ exports.getBooksList = (req, res) => {
   });
 };
 exports.getBookById = (req, res) => {
-  //TODO: write code here.
-  var id = req.params.id;
-  if (id) {
-    var query = Book.findOne({ where: { id: id }, include: Genre });
-    query.then((r) => {
-      if (r) {
-        res.json(r);
-      } else {
-        res.status(404).json({ status: "404" });
-      }
+  generalHandler(res, async () => {
+    var id = req.params.id;
+    var query = await Book.findOne({
+      where: { id: id },
+      include: [Author, Genre],
     });
-  }
+    foundedOrNot(res, query);
+  });
 };
 exports.updateBookById = (req, res) => {
   //TODO: write code here.
@@ -28,42 +28,37 @@ exports.deleteBookById = (req, res) => {
 };
 
 exports.addNewBook = (req, res) => {
-  //TODO: write code here.
-  let body = req.body;
-  Book.create(body)
-    .then((book) => {
-      console.log(body.genresIds);
-      const promises = [];
-      body.genresIds.forEach(async(element) => {
-       await BookGenre.create({
-          BookId: book.id,
-          GenreId: element,
-        }).then(()=>{
-Book.findOne({ where: { id: book.id }, include: Genre }).then(
-        (books) => {
-          res.json(books);
-        }
-      );
-        })
-        console.log(`element: ${element}`);
-        // promises.push(
-         
-        // );
+  generalHandler(res, () => {
+    const ajv = new AJV();
+    addFormats(ajv);
+    const validate = ajv.compile(postBookSchema);
+    const valid = validate(req.body);
+    console.log(validate.errors);
+    if (!valid) throw validate.errors;
+  });
 
-      });
-      
-      // Promise.all(promises).then((arr) => {
-      //   Book.findOne({ where: { id: book.id }, include: Genre }).then(
-      //     (books) => {
-      //       res.json(books);
-      //     }
-      //   );
-      // });
-    })
+  // Book.create(body)
+  //   .then((book) => {
+  //     console.log(body.genresIds);
+  //     const promises = [];
+  //     body.genresIds.forEach(async (element) => {
+  //       await BookGenre.create({
+  //         BookId: book.id,
+  //         GenreId: element,
+  //       }).then(() => {
+  //         Book.findOne({ where: { id: book.id }, include: Genre }).then(
+  //           (books) => {
+  //             res.json(books);
+  //           }
+  //         );
+  //       });
+  //       console.log(`element: ${element}`);
+  //     });
+  //   })
 
-    .catch((err) => {
-      console.log("err");
-    });
+  //   .catch((err) => {
+  //     console.log("err");
+  //   });
 };
 
 exports.getBooksList = (req, res) => {
