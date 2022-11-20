@@ -3,7 +3,7 @@ const controller = require("../../controllers/users/index");
 const router = express.Router();
 
 //TODO: create the method in controller
-// router.get("/", controller.getAllUsers);
+router.get("/", controller.getAllUsers);
 
 //TODO: create the method in controller
 // router.put("/update", controller.updateUserById);

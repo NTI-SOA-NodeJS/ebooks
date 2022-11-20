@@ -1,6 +1,4 @@
-exports.getAllUsers = (req, res) => {
-  //TODO: write code here.
-};
+
 exports.updateUserById = (req, res) => {
   //TODO: write code here.
 };
