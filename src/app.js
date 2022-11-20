@@ -42,10 +42,10 @@ app.get("/", (req, res) => {
 app.post("/upload", (req, res) => {
   generalHandler(res, async () => {
     var up = upload.single("uploaded_file");
+
     await up(req, res, function (err) {
       if (err) throw err;
-      res.json({ file: req.file });
-      console.log({ file: req.file, body: req.body });
+      res.json({ path: `path/${req.file.originalname}` });
     });
   });
 });
