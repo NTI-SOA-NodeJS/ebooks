@@ -1,11 +1,16 @@
+const { ResponseTemp } = require("../utils/utils");
+
 exports.checkId = (req, res, next) => {
   var id = req.params.id;
-  if (id) {
+  if (parseInt(id)) {
     next();
   } else {
-    res.status(400).json({
-        status:400,
-        message:"id params is required"
-    })
+    // res.status(400).json({
+    //   status: 400,
+    //   message: "id parameter is require an integer value.",
+    // });
+    ResponseTemp(res,400,"id parameter is require an integer value.")
   }
 };
+
+
