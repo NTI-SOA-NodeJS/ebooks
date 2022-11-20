@@ -11,5 +11,6 @@ exports.config = {
   db_host: process.env.MYSQL_HOST,
   dialect: process.env.DIALECT,
   url: process.env.URL,
-  jwt: { secret: "secret" },
+  jwt: process.env.SECERT_TOKEN,
+  rounds: process.env.SALT_ROUNDS,
 };

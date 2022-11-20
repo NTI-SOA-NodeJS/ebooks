@@ -10,9 +10,9 @@ router.get("/", controller.getAllUsers);
 //
 router.get('/emails', controller.getAllEmails)
 //TODO: create the method in controller
-// router.put("/update", controller.updateUserById);
+router.put("/update/:id", controller.updateUserById);
 
-//done-bcrypt
+//done
 router.post("/register", controller.addNewUser);
 
 //done

@@ -1,10 +1,12 @@
 const Email = require("../../../models/auth/Email.model");
 const User = require("../../../models/auth/User.model");
 
+const bcrypt = require("bcrypt");
+
 exports.loginUser = async (req, res) => {
   try {
     const emailAddress = req.body.email;
-    const password = req.body.password;
+    const plaintextPassword = req.body.password;
     const email = await Email.findOne({
       where: {
         isPrimary: true,
@@ -14,10 +16,10 @@ exports.loginUser = async (req, res) => {
     if (email) {
       const userId = email.UserId;
       const user = await User.findByPk(userId);
-      const realPassword = user.password;
-      console.log(`password: ${realPassword}`);
+      const hashPassword = user.password;
+      console.log(`password: ${hashPassword}`);
 
-      if (realPassword === password) {
+      if (bcrypt.compareSync(plaintextPassword, hashPassword)) {
         res.json({
           status: "ok",
           message: "logged in successfully",

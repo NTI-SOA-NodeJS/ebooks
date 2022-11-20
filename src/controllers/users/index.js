@@ -1,6 +1,6 @@
 const { addNewUser } = require("./loginSystem/register.controller");
 const { loginUser } = require("./loginSystem/loginUser.controller");
-const { logoutUser } = require("./loginSystem/  logoutUser.controller");
+const { logoutUser } = require("./loginSystem/logoutUser.controller");
 const { getAllUsers } = require("./manageUserData/getAllUsers.controller");
 const {
   deleteUserById,
@@ -12,6 +12,9 @@ const {
 const {
   addEmailToUser,
 } = require("./manageUserData/addEmailToUser.controller");
+const {
+  updateUserById,
+} = require("./manageUserData/updateUserById.controller");
 
 const { getAllEmails } = require("./getAllEmails.controller");
 
@@ -30,4 +33,5 @@ module.exports = {
   getAllEmails,
   loginUser,
   logoutUser,
+  updateUserById,
 };

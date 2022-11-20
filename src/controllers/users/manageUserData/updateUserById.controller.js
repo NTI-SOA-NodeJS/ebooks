@@ -1,10 +1,23 @@
-const { Role } = require("../../../models/auth/Role.model");
+const User = require("../../../models/auth/User.model");
 
 exports.updateUserById = async (req, res) => {
   try {
-    const role = req.body;
-    const newRole = Role.create(ro);
+    const { name, phone, birthDate, password } = req.body;
+    const id = req.params.id;
+    const updatedUser =await User.update(
+      { name, phone, birthDate, password },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({
+      status: "ok",
+      message: "user updated successfully",
+      data: updatedUser,
+    });
   } catch (error) {
-    console.log(`role can't be create => ${error}`);
+    console.log(`user can't be updated => ${error}`);
   }
 };
