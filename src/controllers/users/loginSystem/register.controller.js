@@ -5,7 +5,7 @@ exports.addNewUser = async (req, res) => {
     const user = req.body;
     console.log(user);
     const newUser = await User.create(user);
-    res.json({ state: 'ok', message: "user created!!" });
+    res.json({ state: 'ok', message: "user created!!", data: newUser });
   } catch (error) {
     console.log(`user can't be registered => ${error}`);
   }
