@@ -1,11 +1,10 @@
+const AJV = require("ajv").default;
+const addFormats = require("ajv-formats").default;
+
 exports.foundedOrNot = (res, body) => {
   if (body) {
     res.json(body);
   } else {
-    //   res.status(404).json({
-    //     status: 404,
-    //     message: "Not found",
-    //   });
     this.ResponseTemp(res, 404, "Not found");
   }
 };
@@ -48,4 +47,13 @@ exports.generalHandler = async (res, fun) => {
     console.error(err);
     this.ResponseTemp(res, 400, err);
   }
+};
+
+exports.handleSchema = (schema, body) => {
+  const ajv = new AJV();
+  addFormats(ajv);
+  const validate = ajv.compile(schema);
+  const valid = validate(body);
+  if (!valid) throw validate.errors;
+  return valid;
 };
