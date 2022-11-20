@@ -21,7 +21,6 @@ const sequelize = new Sequelize(
 //   });
 // };
 
-<<<<<<< HEAD
 // const Book = (sequelize, DataTypes) => {
 //   sequelize.define("Author", {
 //     name: {
@@ -49,35 +48,6 @@ const sequelize = new Sequelize(
 // Author(sequelize, Sequelize.DataTypes);
 // Book(sequelize, Sequelize.DataTypes);
 // console.log(`truth is : ${Book.hasMany}`);
-=======
-const Book = (sequelize, DataTypes) => {
-  sequelize.define("Book", {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    isbn: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    data: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    isDeleted: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-  });
-};
-Author(sequelize, Sequelize.DataTypes);
-Book(sequelize, Sequelize.DataTypes);
-console.log(`truth is : ${sequelize }`);
->>>>>>> 888d396f0a539513f5d609a8aaf3aac4e557fc60
 // Book.belongsToMany(Author, { through: "Author_Books" });
 // Author.belongsToMany(Book, {
 //   through: "Author_Books",
