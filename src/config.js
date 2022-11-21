@@ -13,4 +13,6 @@ exports.config = {
   url: process.env.URL,
   jwt: process.env.SECERT_TOKEN,
   rounds: process.env.SALT_ROUNDS,
+  google_client_id: process.env.GOOGLE_CLIENT_ID,
+  google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
 };
