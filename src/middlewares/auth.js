@@ -7,7 +7,9 @@ exports.protect = (req, res, next) => {
     const token = bearerHeader.split(" ")[1];
     const verifiedToken = jwt.verify(token, config.jwt);
     if (verifiedToken) {
-      req.body.roleId = verifiedToken.role
+      req.body.roleId = verifiedToken.role;
+      req.body.loginUserId = verifiedToken.userId;
+      console.log(`req.body.loginUserId: ${req.body.loginUserId}`);
       next();
     }
   } else {

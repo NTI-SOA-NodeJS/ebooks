@@ -25,7 +25,7 @@ exports.loginUser = async (req, res) => {
       if (bcrypt.compareSync(plaintextPassword, hashPassword)) {
         const maxAge = 3 * 60 * 60;
         const token = jwt.sign(
-          { emailAddress, role: role_id },
+          { emailAddress, role: role_id, userId },
           config.jwt,
           { expiresIn: maxAge }
         );
