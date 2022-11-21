@@ -8,11 +8,11 @@ router.post("/roles", protect, superAdmin, controller.addNewRole);
 //done
 router.get("/roles", protect, superAdmin, controller.getAllRoles);
 //done
-router.get("/", controller.getAllUsers);
+router.get("/", protect,controller.getAllUsers);
 //
-router.get("/emails", controller.getAllEmails);
+router.get("/emails", protect,controller.getAllEmails);
 //TODO: create the method in controller
-router.put("/update/:id", controller.updateUserById);
+router.put("/update/:id", protect,controller.updateUserById);
 
 //done
 router.post("/register", controller.addNewUser);
