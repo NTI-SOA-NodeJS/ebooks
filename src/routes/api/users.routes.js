@@ -4,7 +4,7 @@ const { protect } = require("../../middlewares/auth");
 const { superAdmin } = require("../../middlewares/super.auth");
 const router = express.Router();
 //done
-router.post("/roles", protect, superAdmin, controller.addNewRole);
+router.post("/roles", /*protect, superAdmin,*/ controller.addNewRole);
 //done
 router.get("/roles", protect, superAdmin, controller.getAllRoles);
 //done
