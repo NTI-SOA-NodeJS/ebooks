@@ -17,4 +17,16 @@ Has an address book to store information of different addresses.
 Has attachment option.
 
 
-###make user columns unique
+###database:
+add roles then add auth middleware
+
+
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=password
+MYSQL_DATABASE=ebooks
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+DIALECT=mysql
+SERVER_PORT=3000
+SALT_ROUNDS=10
+SECERT_TOKEN=aebc1933ec76f4d6b53e2850f4fcFSJRJRJwid%nsdj
