@@ -110,10 +110,6 @@ exports.addNewBook = (req, res) => {
 };
 
 exports.getBooksList = (req, res) => {
-  // Book.findAll({ include: [Author, Genre] }).then((books) => {
-  //   res.json(books);
-  // });
-
   generalHandler(res, async () => {
     const page = req.query.page || 0;
     const len = req.query.len || 10;
@@ -121,12 +117,29 @@ exports.getBooksList = (req, res) => {
     const authorsIds = req.query.authorsIds;
     const genresIds = req.query.genresIds;
     var lst = await Book.findAll({
-      include: [Genre, Author],
+      include: [
+        genresIds != null
+          ? {
+              model: Genre,
+              through: {
+                where: { GenreId: { [Op.in]: JSON.parse(genresIds) } },
+              },
+            }
+          : Genre,
+        authorsIds != null
+          ? {
+              model: Author,
+              through: {
+                where: { AuthorId: { [Op.in]: JSON.parse(authorsIds) } },
+              },
+            }
+          : Author,
+      ],
       where:
         searchValue != null
           ? {
               title: { [Op.substring]: searchValue },
-              Genres:{}
+              Genres: {},
             }
           : {},
 
