@@ -1,5 +1,6 @@
 const express = require("express");
 const controller = require("../../controllers/order/order.controller");
+const { protect } = require("../../middlewares/auth");
 
 const router = express.Router();
 
@@ -10,8 +11,11 @@ const router = express.Router();
 // //TODO: create the method in controller
 // router.delete("/:id",checkId, controller.deleteBookById);
 
-router.post("/", controller.addNewOrder);
-router.post("/orderItem", controller.addNewOrderItem);
+router.post("/", controller.openOrder);
+router.get("/", controller.getAllOrders);
+router.get("/orderItems", controller.getAllOrderItems);
+router.post("/:id",  controller.closeOrder);
+router.post("/orderItem/:orderId", controller.addNewOrderItem);
 
 // router.get("/", controller.getBooksList);
 
