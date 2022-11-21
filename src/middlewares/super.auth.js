@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
-exports.superAdmin = (res, req, next) => {
-  const token = req.headers["authorization"];
-  console.log(`token: ${token}`);
-  if (roleId === 1) {
+exports.superAdmin = (req, res, next) => {
+  console.log("hello from super admin ");
+  console.log(req.body.roleId);
+  if (req.body.roleId === 1) {
     next();
   } else {
     res.json({
