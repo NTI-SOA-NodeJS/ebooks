@@ -40,7 +40,7 @@ exports.listResponse = (results, page, len) => ({
   data: results,
 });
 
-exports.generalHandler = async (res, fun) => {
+exports.generalHandler = async (res, fun,) => {
   try {
     await fun();
   } catch (err) {

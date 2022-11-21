@@ -27,8 +27,9 @@ const app = express();
     await sequelize.authenticate({ force: false });
     console.log("Connection has been established successfully.");
   } catch (error) {
-    console.error("Unable to connect to the database");
+    console.error(error);
   }
+
 })();
 
 app.use(express.json());

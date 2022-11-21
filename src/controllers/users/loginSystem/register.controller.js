@@ -1,9 +1,10 @@
 const { Email } = require("../../../models");
 const User = require("../../../models/auth/User.model");
+const { generalHandler } = require("../../../utils/utils");
 
 User.methods;
 exports.addNewUser = async (req, res) => {
-  try {
+  generalHandler(res, async () => {
     const { email, ...user } = req.body;
     // console.log(`email: ${email}
     // password: ${password}
@@ -13,7 +14,5 @@ exports.addNewUser = async (req, res) => {
     newUser.addEmail(newEmail);
 
     res.json({ state: "ok", message: "user created!!", data: newUser });
-  } catch (error) {
-    console.log(`user can't be registered => ${error}`);
-  }
+  });
 };

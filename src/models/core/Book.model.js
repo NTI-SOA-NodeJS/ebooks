@@ -11,7 +11,7 @@ const Book =
       allowNull: false,
     },
     publishDate: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     url: {

@@ -1,15 +1,11 @@
 const { DataTypes } = require("sequelize");
-
-const Order = (sequelize) =>
-  sequelize.define("Order", {
-    total: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
-    },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-  });
+const sequelize = require("../../database/sequelize");
+const Order = sequelize.define("Order", {
+  total: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+ 
+});
 
 module.exports = Order;
