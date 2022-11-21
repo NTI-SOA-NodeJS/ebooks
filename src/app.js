@@ -5,7 +5,8 @@ const path = require("path");
 const sequelize = require("./database/sequelize");
 const { ResponseTemp, generalHandler } = require("./utils/utils");
 const multer = require("multer");
-const session = require("express-session")
+const session = require("express-session");
+const passport = require("passport");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "assets/books/");
@@ -29,14 +30,54 @@ const app = express();
   } catch (error) {
     console.error(error);
   }
-
 })();
 
 app.use(express.json());
 app.use("/path", express.static("assets/books"));
-
 app.use("/api", routes);
 
+//auth ---------------------------------------------
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: GOOGLE_CLIENT_ID,
+//       clientSecret: GOOGLE_CLIENT_SECRET,
+//       callbackURL: "http://localhost:3000/auth/google/callback",
+//       passReqToCallback: true,
+//     },
+//     authUser
+//   )
+// );
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+
+//   // The "user" is the authenticated user object, that is passed from the authUser() function in "Google Strategy".
+//   // This "user" object is attached to
+//   //"req.session.passport.user.{user}"
+// });
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
+
+// app.get(
+//   "/auth/google",
+//   passport.authenticate("google", { scope: ["email", "profile"] })
+// );
+// app.get(
+//   "/auth/google/callback",
+//   // (req, res, next) => {
+//   //   console.log("hello");
+//   //   res.send("hello");
+//   // },
+//   passport.authenticate("google", {
+//     successRedirect: "/dashboard",
+//     failureRedirect: "/login",
+//     //console.log("")
+//   })
+// );
+//----------------------------------------
 app.get("/", (req, res) => {
   res.json({ state: "OK" });
 });
@@ -50,7 +91,6 @@ app.post("/upload", (req, res) => {
     });
   });
 });
-
 app.get("*", function (req, res) {
   ResponseTemp(res, 404);
 });
