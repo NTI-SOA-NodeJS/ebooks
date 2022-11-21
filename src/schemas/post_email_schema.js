@@ -1,13 +1,19 @@
 exports.postEmailSchema = {
   type: "object",
   properties: {
-    from: { type: "string" },
-    to: { type: "string" },
+    // from: { type: "string" },
+    to: {
+      type: "array",
+      items: { type: "integer" },
+    },
     subject: { type: "string" },
     text: { type: "string" },
     html: { type: "string" },
-    book: { type: "integer" },
+    booksIds:  {
+      type: "array",
+      items: { type: "integer" },
+    },
   },
-  required: ["from", "to", "subject", "text", "book"],
+  required: ["to", "subject", "text", "booksIds"],
   additionalProperties: false,
 };

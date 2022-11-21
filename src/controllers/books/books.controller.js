@@ -140,7 +140,6 @@ exports.getBooksList = (req, res) => {
         searchValue != null
           ? {
               title: { [Op.substring]: searchValue },
-              Genres:{}
             }
           : {},
 
