@@ -9,7 +9,7 @@ const app = express();
 
 (async () => {
   try {
-    // await sequelize.sync({ force: false, alter: true });
+    // await sequelize.sync({ force: true, alter: true });
     await sequelize.authenticate({ force: false });
     console.log("Connection has been established successfully.");
   } catch (error) {

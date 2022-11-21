@@ -1,7 +1,9 @@
 const Email = require("../../../models/auth/Email.model");
 const User = require("../../../models/auth/User.model");
 
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { config } = require("../../../config");
 
 exports.loginUser = async (req, res) => {
   try {
@@ -16,15 +18,28 @@ exports.loginUser = async (req, res) => {
     if (email) {
       const userId = email.UserId;
       const user = await User.findByPk(userId);
+      const role_id = user.RoleId;
       const hashPassword = user.password;
       console.log(`password: ${hashPassword}`);
 
       if (bcrypt.compareSync(plaintextPassword, hashPassword)) {
-        res.json({
-          status: "ok",
-          message: "logged in successfully",
-          data: user,
-        });
+        const maxAge = 3 * 60 * 60;
+        const token = jwt.sign(
+          { emailAddress, role: role_id },
+          config.jwt,
+          { expiresIn: maxAge }
+        );
+        res
+          .cookie("jwt", token, {
+            httpOnly: true,
+            maxAge: maxAge * 1000,
+          })
+          .json({
+            status: "ok",
+            message: "logged in successfully",
+            data: user,
+            token,
+          });
       } else {
         res.json({ status: "failed", message: "wrong password" });
       }
