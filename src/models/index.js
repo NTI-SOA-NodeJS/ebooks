@@ -5,6 +5,8 @@ const sequelize = require("../database/sequelize");
 const Role = require("./auth/Role.model");
 const User = require("./auth/User.model");
 const Email = require("./auth/Email.model");
+const Order = require("./core/Order.model");
+const OrderItem = require("./core/Order_Item.model");
 const BookAuthor = sequelize.define("BookAuthor");
 const BookGenre = sequelize.define("BookGenre");
 
@@ -19,6 +21,16 @@ User.belongsTo(Role);
 
 User.hasMany(Email);
 Email.belongsTo(User);
+
+User.hasMany(Order);
+Order.belongsTo(User);
+
+Order.hasMany(OrderItem);
+OrderItem.belongsTo(Order);
+
+Book.hasMany(OrderItem);
+OrderItem.belongsTo(Book);
+
 module.exports = {
   Author,
   Genre,
@@ -28,4 +40,6 @@ module.exports = {
   User,
   Role,
   Email,
+  Order,
+  OrderItem,
 };

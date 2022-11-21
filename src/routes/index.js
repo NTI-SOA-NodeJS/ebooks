@@ -4,6 +4,7 @@ const genresRoutes = require("./api/genres.routes");
 const authorsRoutes = require("./api/authors.routes");
 const usersRoutes = require("./api/users.routes");
 const mailRoutes = require("./api/email.routes");
+const orderRoutes = require("./api/order.routes");
 
 const routes = Router();
 routes.get("/", (req, res) => {
@@ -11,6 +12,7 @@ routes.get("/", (req, res) => {
 });
 
 routes.use("/email", mailRoutes);
+routes.use("/order", orderRoutes);
 routes.use("/books", booksRoutes);
 routes.use("/genres", genresRoutes);
 routes.use("/authors", authorsRoutes);

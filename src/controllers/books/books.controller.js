@@ -110,6 +110,7 @@ exports.addNewBook = (req, res) => {
 };
 
 exports.getBooksList = (req, res) => {
+
   generalHandler(res, async () => {
     const page = req.query.page || 0;
     const len = req.query.len || 10;
@@ -139,7 +140,7 @@ exports.getBooksList = (req, res) => {
         searchValue != null
           ? {
               title: { [Op.substring]: searchValue },
-              Genres: {},
+              Genres:{}
             }
           : {},
 
