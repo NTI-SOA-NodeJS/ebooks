@@ -1,4 +1,7 @@
-const { Author, Order } = require("../../models");
+const { Author } = require("../../models");
+const Order = require("../../models/core/Order.model");
+const OrderItem = require("../../models/core/Order_Item.model");
+const Email = require("../../models/auth/Email.model");
 const {
   postOrderItemSchema,
 } = require("../../schemas/post_orderItem_schema copy");
@@ -9,6 +12,8 @@ const {
   generalHandler,
   handleSchema,
 } = require("../../utils/utils");
+const jwt = require("jsonwebtoken");
+const { config } = require("../../config");
 
 // exports.getAuthorById = async (req, res) => {
 //   generalHandler(res, async () => {
@@ -35,34 +40,67 @@ const {
 //     ResponseTemp(res, status);
 //   });
 // };
+
+exports.openOrder = async (req, res) => {
+  generalHandler(res, async () => {
+    const userId = req.body.loginUserId;
+    const order = await Order.create({ UserId: userId });
+    res.json({
+      status: "ok",
+      message: `order opened use order id: ${order.id} to add books in order items page `,
+      data: order,
+    });
+  });
+};
+
 exports.addNewOrderItem = async (req, res) => {
   generalHandler(res, async () => {
-    var body = req.body;
-    const confirm = handleSchema(postOrderItemSchema, body);
-    res.send(confirm);
-    // var body = req.body;
-    // const [author, created] = await Author.findOrCreate({
-    //   where: { name: body.name },
-    //   defaults: body,
-    // });
-    // foundedOrNot(res, author);
+    const { BookId, quantity } = req.body;
+    const OrderId = req.params.orderId;
+    const orderItem = OrderItem.create({ quantity, BookId, OrderId });
+    console.log(orderItem);
+    res.json({
+      status: "ok",
+      message: `items added to order with id: ${OrderId}`,
+      data: orderItem,
+    });
   });
 };
-exports.addNewOrder = async (req, res) => {
+
+exports.closeOrder = async (req, res) => {
   generalHandler(res, async () => {
-    var body = req.body;
-    const order = Order.create(body);
-    res.json(order);
+    const id = req.params.id;
+    const order = Order.update(
+      { isOpen: false },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({status:'ok', message :'order closed successuffly', data: order});
   });
 };
-// exports.getAllAuthors = async (req, res) => {
+// exports.getAllOrders = async (req, res) => {
 //   generalHandler(res, async () => {
 //     const page = req.query.page || 0;
 //     const len = req.query.len || 10;
-//     var lst = await Author.findAll({
+//     var lst = await Order.findAll({
 //       offset: parseInt(page) * parseInt(len),
 //       limit: parseInt(len),
 //     });
 //     res.json(listResponse(lst, page, len));
 //   });
 // };
+exports.getAllOrders = async (req, res) => {
+  generalHandler(res, async () => {
+    var lst = await Order.findAll();
+    res.json(lst);
+  });
+};
+exports.getAllOrderItems = async (req, res) => {
+  generalHandler(res, async () => {
+    var lst = await OrderItem.findAll();
+    res.json(lst);
+  });
+};
