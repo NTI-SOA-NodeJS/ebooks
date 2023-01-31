@@ -19,6 +19,7 @@ Has attachment option.
 
 ###database:
 add roles then add auth middleware
+<<<<<<< HEAD
 
 
 MYSQL_USERNAME=root
@@ -30,3 +31,5 @@ DIALECT=mysql
 SERVER_PORT=3000
 SALT_ROUNDS=10
 SECERT_TOKEN=aebc1933ec76f4d6b53e2850f4fcFSJRJRJwid%nsdj
+=======
+>>>>>>> 975d4f7ebbba7a78aff36f5dbf3c0376e52e1b4a
